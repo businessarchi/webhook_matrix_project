@@ -1,0 +1,26 @@
+bridge:
+  domain: webhook.matrix.groupjumel.com
+  url: http://localhost:8008
+  port: 9993
+  bindAddress: 127.0.0.1
+
+passFile: ./passkey.pem
+
+logging:
+  level: info
+  colorize: true
+  json: false
+  timestampFormat: HH:mm:ss:SSS
+
+listeners:
+  - port: 9000
+    bindAddress: 0.0.0.0
+    resources:
+      - webhooks
+
+generic:
+  enabled: true
+  outbound: true
+  urlPrefix: https://webhook.matrix.groupjumel.com/webhooks/
+  allowJsTransformationFunctions: false
+  waitForComplete: false
