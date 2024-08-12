@@ -4,7 +4,7 @@ bridge:
   port: 9993
   bindAddress: 127.0.0.1
 
-passFile: ./passkey.pem
+passFile: /config/passkey.pem
 
 logging:
   level: info
