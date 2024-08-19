@@ -1,26 +1,60 @@
+# Basic bridge configuration
 bridge:
-  domain: webhook.matrix.groupjumel.com
-  url: http://localhost:8008
+  domain: ${HOMESERVER_DOMAIN}
+  url: ${HOMESERVER_URL}
   port: 9993
-  bindAddress: 127.0.0.1
+  bindAddress: 0.0.0.0
 
-passFile: /config/passkey.pem
+# Encryption passkey file
+passFile: /data/passkey.pem
 
+# Logging configuration
 logging:
   level: info
   colorize: true
   json: false
   timestampFormat: HH:mm:ss:SSS
 
+# Listener configuration
 listeners:
   - port: 9000
     bindAddress: 0.0.0.0
     resources:
       - webhooks
+  - port: 9001
+    bindAddress: 127.0.0.1
+    resources:
+      - metrics
+      - provisioning
 
+# Generic webhook configuration
 generic:
   enabled: true
   outbound: true
-  urlPrefix: https://webhook.matrix.groupjumel.com/webhooks/
+  enableHttpGet: false
+  urlPrefix: ${WEBHOOK_URL}
+  userIdPrefix: _webhooks_
   allowJsTransformationFunctions: false
   waitForComplete: false
+
+# Provisioning API configuration
+provisioning:
+  secret: ${PROVISION_SECRET}
+
+# Bot configuration
+bot:
+  displayname: Hookshot Bot
+  avatar: mxc://example.com/hookshot-bot-avatar
+
+# Metrics configuration (optional)
+metrics:
+  enabled: true
+
+# Permissions configuration
+permissions:
+  - actor: ${HOMESERVER_DOMAIN}
+    services:
+      - service: "*"
+        level: admin
+
+# You may want to add other configurations like github, gitlab, jira, etc. if needed
